@@ -1,8 +1,8 @@
-** Collection2-Migrations
+## Collection2-Migrations
 
 This package will help you manage your DB migrations with regard of collection2 and simple schema.
 
-*** Auto Migration
+### Auto Migration
 
 The package will note when there is a change in the schema and after a notable change it will try to auto migrate.
 Auto migration will do the following for each document on the collection:
@@ -18,7 +18,7 @@ Auto migration will currently not:
   
 All of the above features are planned to be implemented eventually but I will sure appreciate code submissions.
 
-*** Using
+### Using
 
 Use the regular attachSchema call
 
