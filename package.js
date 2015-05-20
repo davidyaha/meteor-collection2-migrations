@@ -1,6 +1,6 @@
 Package.describe({
   name: 'davidyaha:collection2-migrations',
-  version: '0.0.1',
+  version: '0.0.2',
   // Brief, one-line summary of the package.
   summary: 'Auto DB migrations with collection2 and simple schema on Meteor',
   // URL to the Git repository containing the source code for this package.
