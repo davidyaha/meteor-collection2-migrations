@@ -27,8 +27,7 @@ Mongo.Collection.prototype.attachSchema = function registerMigration(ss, options
     var currentSchemaValues = migrationObject.values;
   }
 
-  if (newSchema && (!_.isEqual(currentSchemaKeys, _.keys(newSchema)) ||
-                    !_.isEqual(currentSchemaValues, _.values(newSchema)))) {
+  if (newSchema && (!_.isEqual(currentSchemaKeys, _.keys(newSchema)))) {
 
     if (validateCollection(self)){
       if (!currentSchemaKeys) {

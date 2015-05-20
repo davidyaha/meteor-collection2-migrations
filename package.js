@@ -15,6 +15,7 @@ Package.onUse(function(api) {
 
   api.use(['underscore', 'aldeed:collection2@2.3.3'], 'server');
   api.addFiles('collection2-migrations.js', 'server');
+  api.addFiles('client-stubs.js', 'client');
 });
 
 Package.onTest(function(api) {

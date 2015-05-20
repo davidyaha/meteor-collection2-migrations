@@ -71,6 +71,19 @@ Tinytest.add('attachSchema - changing the schema', function (test) {
   teardown(test);
 });
 
+Tinytest.add('attachSchema - no change', function (test) {
+  Stores.attachSchema(storesV1, {replace: true});
+
+  test.equal(Stores._migrations.findOne({_id: Stores._name}).version, 1);
+
+  Stores.attachSchema(storesV1, {replace: true});
+
+  test.equal(Stores._migrations.findOne({_id: Stores._name}).version, 1);
+
+  teardown(test);
+});
+
+
 Tinytest.add('attachSchema - custom change', function (test) {
   Books.attachSchema(booksV1, {replace: true});
   Stores.attachSchema(storesV1, {replace: true});
