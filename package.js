@@ -1,6 +1,6 @@
 Package.describe({
   name: 'davidyaha:collection2-migrations',
-  version: '0.0.2',
+  version: '0.0.3',
   // Brief, one-line summary of the package.
   summary: 'Auto DB migrations with collection2 and simple schema on Meteor',
   // URL to the Git repository containing the source code for this package.
@@ -13,7 +13,7 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.2');
 
-  api.use(['underscore', 'aldeed:collection2@2.3.3'], 'server');
+  api.use(['underscore', 'aldeed:collection2@2.3.3']);
   api.addFiles('collection2-migrations.js', 'server');
   api.addFiles('client-stubs.js', 'client');
 });
