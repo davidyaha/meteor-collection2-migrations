@@ -111,16 +111,19 @@ function validateCollection(collection) {
                 !findInKeyHierarchy(invalidKey.name, unsetObject))
             unsetObject[invalidKey.name] = 1;
 
-          else if (invalidKey.type === 'required' &&
-              ( ss.schema()[invalidKey.name].defaultValue === undefined &&
-                ss.schema()[invalidKey.name].autoValue === undefined )) {
+          else {
+            var schemaKey = getSchemaKey(invalidKey.name);
+            if ( invalidKey.type === 'required' &&
+               ( ss.schema()[schemaKey].defaultValue === undefined &&
+                 ss.schema()[schemaKey].autoValue === undefined )) {
 
-            console.log('missing required key', invalidKey.name, 'on document',
-                          docsId,'and there is no default value or auto value set');
-            problem = true;
+                   console.log('missing required key', invalidKey.name, 'on document',
+                                  docsId,'and there is no default value or auto value set');
+                   problem = true;
 
-          } else
-            console.log(invalidKey.name, invalidKey.type);
+            } else
+              console.log(invalidKey.name, invalidKey.type);
+          }
         });
 
         if (!problem) {
@@ -163,4 +166,11 @@ function findInKeyHierarchy(keyToFind, object) {
 
     return false;
   });
+}
+
+function getSchemaKey(documentKey) {
+  if ( typeof documentKey !== 'string' )
+    throw new Meteor.Error('document key must be a string. instead was ' + typeof documentKey);
+  else
+    return documentKey.replace(/\.\d+\./g, '.$.');
 }
