@@ -19,7 +19,24 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function(api) {
-  api.use(['aldeed:collection2', 'tinytest', 'test-helpers'], 'server');
+  // dependencies of tests
+  api.use(['aldeed:collection2', 'tinytest'], 'server');
+
+  // this package
   api.use('davidyaha:collection2-migrations', 'server');
-  api.addFiles('collection2-migrations-tests.js', 'server');
+
+  // test helper methods like teardown
+  api.addFiles('tests/test-helpers.js', 'server');
+
+  // setup stage for all tests
+  api.addFiles('tests/setup.js', 'server');
+
+  // used schemas file
+  api.addFiles('tests/schemas.js', 'server');
+
+  // test of features
+  api.addFiles(['tests/attachSchema-tests.js', 'tests/addCustomMigration-tests.js'], 'server');
+
+  // last teardown call
+  api.addFiles('tests/teardown.js', 'server');
 });
