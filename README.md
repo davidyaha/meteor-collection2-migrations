@@ -3,6 +3,9 @@
 
 This package will help you manage your DB migrations with regard of collection2 and simple schema.
 
+### Important Notice - This package is a pre-release! Backup of your current DB is strongly advised!
+
+
 ### Auto Migration
 
 The package will note when there is a change in the schema and after a notable change it will try to auto migrate.
@@ -16,6 +19,7 @@ Auto migration will currently not:
   - Rename a field.
   - Check for missing ids on field that suppose to relate to another document.
   - Rebuild indexes.
+  - Auto fill values that fail on a regEx.
   
 All of the above features are planned to be implemented eventually but I will sure appreciate code submissions.
 

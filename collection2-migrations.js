@@ -121,15 +121,24 @@ function validateCollection(collection) {
                                   docsId,'and there is no default value or auto value set');
                    problem = true;
 
+            } else if ( invalidKey.type === 'regEx') {
+              console.log(invalidKey.name, 'failed regular expression validation in document with id', docsId);
+              problem = true;
             } else
               console.log(invalidKey.name, invalidKey.type);
           }
         });
 
         if (!problem) {
-          collection.update(docsId,
-            {'$unset': unsetObject},
-            {validate: false, filter: false});
+          var unsetKeys = _.keys(unsetObject);
+          if (unsetKeys.length !== 0) {
+            console.log('The following fields will be deleted', unsetKeys);
+
+            collection.update(docsId,
+              {'$unset': unsetObject},
+              {validate: false, filter: false});
+          }
+
           collection.update(docsId, {$set: ss.clean(doc)});
 
           console.log('Updated document', docsId, 'to a valid object');

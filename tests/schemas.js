@@ -37,6 +37,15 @@ var booksV2 = new SimpleSchema({
   }
 );
 
+var booksV3 = new SimpleSchema({
+    name: {
+      type: String
+    },
+    author: {
+      type: String
+    }
+  }
+);
 
 var storesV1 = new SimpleSchema({
   name: {
@@ -77,4 +86,4 @@ var storesV2 = new SimpleSchema({
   }
 });
 
-Schemas = {booksV1: booksV1, booksV2: booksV2, storesV1: storesV1, storesV2: storesV2};
+Schemas = {booksV1: booksV1, booksV2: booksV2, booksV3: booksV3, storesV1: storesV1, storesV2: storesV2};
