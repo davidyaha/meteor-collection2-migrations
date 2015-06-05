@@ -1,7 +1,5 @@
 ## Collection2-Migrations
-[![Build Status](https://travis-ci.org/davidyaha/meteor-collection2-migrations.svg?branch=master)](https://travis-ci.org/davidyaha/meteor-collection2-migrations)
-
-[![Coverage Status](https://coveralls.io/repos/davidyaha/meteor-collection2-migrations/badge.svg)](https://coveralls.io/r/davidyaha/meteor-collection2-migrations)
+[![Build Status](https://travis-ci.org/davidyaha/meteor-collection2-migrations.svg?branch=master)](https://travis-ci.org/davidyaha/meteor-collection2-migrations) [![Coverage Status](https://coveralls.io/repos/davidyaha/meteor-collection2-migrations/badge.svg)](https://coveralls.io/r/davidyaha/meteor-collection2-migrations)
 
 This package will help you manage your DB migrations with regard of collection2 and simple schema.
 
