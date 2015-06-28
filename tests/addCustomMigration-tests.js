@@ -57,3 +57,17 @@ Tinytest.add('addCustomMigration - copy values to another collection', function 
 
   teardown(test);
 });
+
+Tinytest.add('addCustomMigration - fail migration on regular expression mismatch', function (test) {
+  Books.attachSchema(Schemas.booksV1, {replace: true});
+
+  Books.insert({name: 'The Rosie Project', author: 'Graeme C. Simsion', isbn: 'ISBN 0 71817 813 0'});
+
+  Books.attachSchema(Schemas.booksV2, {replace: true});
+
+  test.equal(Books.find().count(), 1);
+  test.equal(Books.findOne({name: 'The Rosie Project'}).isbn, 'ISBN 0 71817 813 0');
+  test.equal(Books._migrations.findOne({_id: Books._name}).version, 1);
+
+  teardown(test);
+});
