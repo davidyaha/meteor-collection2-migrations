@@ -47,6 +47,26 @@ var booksV3 = new SimpleSchema({
   }
 );
 
+var booksV4 = new SimpleSchema({
+    name: {
+      type: String
+    },
+    author: {
+      type: String
+    },
+    isbn: { //ISBN 13
+      type: String,
+      regEx: /ISBN(?:-13)?:?\x20*(?=.{17}$)97(?:8|9)([ -])\d{1,5}\1\d{1,7}\1\d{1,6}\1\d$/,
+      optional: true,
+      unique: true
+    },
+    sold: {
+      type: String,
+      defaultValue: "0"
+    }
+  }
+);
+
 var storesV1 = new SimpleSchema({
   name: {
     type: String
@@ -86,4 +106,4 @@ var storesV2 = new SimpleSchema({
   }
 });
 
-Schemas = {booksV1: booksV1, booksV2: booksV2, booksV3: booksV3, storesV1: storesV1, storesV2: storesV2};
+Schemas = {booksV1: booksV1, booksV2: booksV2, booksV3: booksV3, booksV4: booksV4, storesV1: storesV1, storesV2: storesV2};

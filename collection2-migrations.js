@@ -27,29 +27,35 @@ Mongo.Collection.prototype.attachSchema = function registerMigration(ss, options
     var currentSchemaValues = migrationObject.values;
   }
 
-  if (newSchema && (!_.isEqual(currentSchemaKeys, _.keys(newSchema)))) {
+  if (newSchema) {
+    var newSchemaKeys = ss instanceof SimpleSchema ? ss._schemaKeys : _.keys(newSchema);
+    var newSchemaValues = normalizeSchemaValues(_.values(newSchema));
+    
+    if (!_.isEqual(currentSchemaKeys, newSchemaKeys) ||
+        !_.isEqual(currentSchemaValues, newSchemaValues)) {
 
-    if (validateCollection(self)){
-      if (!currentSchemaKeys) {
-        console.log("Collection2-Migrations been activated for the", self._name, "collection\n" +
-          "It will now start track the associated schema versions");
+      if (validateCollection(self)){
+        if (!currentSchemaKeys) {
+          console.log("Collection2-Migrations been activated for the", self._name, "collection\n" +
+            "It will now start track the associated schema versions");
 
-        self._migrations.insert({ _id: self._name, version: 1,
-                                  keys: _.keys(newSchema), values: _.values(newSchema)});
-      } else {
-        console.log("The given schema for", self._name, "is different from the current tracked version.\n" +
-          "The new version number is", migrationObject.version + 1);
-        self._migrations.update({_id: self._name},
-                                { $inc: { version: 1},
-                                  $set : {keys: _.keys(newSchema), values: _.values(newSchema)}});
-      }
+          self._migrations.insert({ _id: self._name, version: 1,
+                                    keys: newSchemaKeys, values: newSchemaValues});
+        } else {
+          console.log("The given schema for", self._name, "is different from the current tracked version.\n" +
+            "The new version number is", migrationObject.version + 1);
+          self._migrations.update({_id: self._name},
+                                  { $inc: { version: 1},
+                                    $set : {keys: newSchemaKeys, values: newSchemaValues}});
+        }
 
-      self.runMigrations();
-    } else
-      console.log("Could not validate and update collection", self._name,". schema did not register.");
+        self.runMigrations();
+      } else
+        console.log("Could not validate and update collection", self._name,". schema did not register.");
 
-  } else {
-    console.log("No change detected for the collection", self._name);
+    } else {
+      console.log("No change detected for the collection", self._name);
+    }
   }
 
   return returnedValue;
@@ -143,9 +149,6 @@ function validateCollection(collection) {
 
           console.log('Updated document', docsId, 'to a valid object');
         }
-
-      } else {
-        //console.info("The object with id", docsId, "is valid");
       }
     });
   }
@@ -182,4 +185,12 @@ function getSchemaKey(documentKey) {
     throw new Meteor.Error('document key must be a string. instead was ' + typeof documentKey);
   else
     return documentKey.replace(/\.\d+\./g, '.$.');
+}
+
+function normalizeSchemaValues(schemaValuesArray) {
+  return _.map(schemaValuesArray, function (fieldDefintion) {
+    return _.map(fieldDefintion, function (propertyValue) {
+      return typeof propertyValue == "function" ? propertyValue.name : propertyValue;
+    })
+  });
 }

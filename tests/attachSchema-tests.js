@@ -20,6 +20,28 @@ Tinytest.add('attachSchema - add fields to the schema', function (test) {
   teardown(test);
 });
 
+Tinytest.add('attachSchema - call with null', function (test) {
+  Books.attachSchema(null);
+
+  test.equal(Books._migrations.find().count(), 0);
+  teardown(test);
+});
+
+Tinytest.add('attachSchema - change field type', function (test) {
+  Books.attachSchema(Schemas.booksV1);
+  Books.attachSchema(Schemas.booksV2); // merge into V1 - isbn is optional
+
+  Books.insert({name: 'Crime and Punishment', author: 'Fyodor Dostoyevsky'});
+
+  Books.attachSchema(Schemas.booksV4, {replace: true});
+
+  test.equal(Books.findOne().sold, "0", "crimeNPunishment has string typed zero");
+  test.equal(Books.find().count(), 1);
+  test.equal(Books._migrations.findOne({_id: Books._name}).version, 3);
+
+  teardown(test);
+});
+
 Tinytest.add('attachSchema - remove fields from the schema', function (test) {
   Books.attachSchema(Schemas.booksV1);
 
@@ -28,11 +50,9 @@ Tinytest.add('attachSchema - remove fields from the schema', function (test) {
 
   var crimeNPunishment = Books.findOne({name: 'Crime and Punishment'});
   test.equal(crimeNPunishment.author, 'Fyodor Dostoyevsky');
-  test.equal(crimeNPunishment.sold, 0);
 
   var rosieProject = Books.findOne({name: 'The Rosie Project'});
   test.equal(rosieProject.isbn, 'ISBN 0 71817 813 0');
-  test.equal(rosieProject.sold, 0);
 
   Books.attachSchema(Schemas.booksV3, {replace: true});
 
@@ -40,11 +60,10 @@ Tinytest.add('attachSchema - remove fields from the schema', function (test) {
 
   crimeNPunishment = Books.findOne({name: 'Crime and Punishment'});
   test.equal(crimeNPunishment.author, 'Fyodor Dostoyevsky');
-  test.isUndefined(crimeNPunishment.sold);
+  test.isUndefined(crimeNPunishment.isbn);
 
   rosieProject = Books.findOne({name: 'The Rosie Project'});
   test.isUndefined(rosieProject.isbn);
-  test.isUndefined(rosieProject.sold);
 
   test.equal(Books._migrations.findOne({_id: Books._name}).version, 2, 'new version of books schema registerd');
 
@@ -82,20 +101,6 @@ Tinytest.add('attachSchema - no field that is required and no default value or a
   test.equal(Books.findOne({name: 'The Rosie Project'}).isbn, 'ISBN-13 978 0 71817 813 0');
   test.equal(Books.findOne({name: 'The Rosie Project'}).sold, 0);
   test.equal(Books._migrations.findOne({_id: Books._name}).version, 2);
-
-  teardown(test);
-});
-
-Tinytest.add('addCustomMigration - fail migration on regular expression mismatch', function (test) {
-  Books.attachSchema(Schemas.booksV1, {replace: true});
-
-  Books.insert({name: 'The Rosie Project', author: 'Graeme C. Simsion', isbn: 'ISBN 0 71817 813 0'});
-
-  Books.attachSchema(Schemas.booksV2, {replace: true});
-
-  test.equal(Books.find().count(), 1);
-  test.equal(Books.findOne({name: 'The Rosie Project'}).isbn, 'ISBN 0 71817 813 0');
-  test.equal(Books._migrations.findOne({_id: Books._name}).version, 1);
 
   teardown(test);
 });
