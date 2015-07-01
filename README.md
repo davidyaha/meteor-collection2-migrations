@@ -79,6 +79,7 @@ Books.addCustomMigration('migrate isbn-10 to isbn-13', function () {
 }, true);
 
 Books.attachSchema(booksV2);
+```
 
 ### Next Big Thing
 
