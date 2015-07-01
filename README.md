@@ -98,3 +98,5 @@ migrate to a certain version of the schema.
 
 Make sure to tell me what you think of it in comments or issues.
 
+Thanks to @asafdav for this insight!
+
