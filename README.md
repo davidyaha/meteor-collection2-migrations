@@ -1,7 +1,7 @@
 ## Collection2-Migrations
 [![Build Status](https://travis-ci.org/davidyaha/meteor-collection2-migrations.svg?branch=master)](https://travis-ci.org/davidyaha/meteor-collection2-migrations)
 
-This package will help you manage your DB migrations with regard of collection2 and simple schema.
+This package will help you manage your DB migrations with regard of [aldeed:collection2](https://github.com/aldeed/meteor-collection2) and [aldeed:simple-schema](https://github.com/aldeed/meteor-simple-schema).
 
 ### Important Notice - This package is a pre-release! Backup of your current DB is strongly advised!
 
