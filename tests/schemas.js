@@ -106,4 +106,85 @@ var storesV2 = new SimpleSchema({
   }
 });
 
-Schemas = {booksV1: booksV1, booksV2: booksV2, booksV3: booksV3, booksV4: booksV4, storesV1: storesV1, storesV2: storesV2};
+var storesV3 = new SimpleSchema({
+  name: {
+    type: String
+  },
+  name_sorting: {
+    type: String,
+    autoValue: function () {
+      var name = this.field('name');
+      if (name.isSet)
+        return name.value.toLowerCase();
+      else
+        return this.unset();
+    }
+  },
+  address: {
+    type: String
+  },
+  gross: {
+    type: Number,
+    defaultValue: 0
+  },
+  stock: {
+    type: [Object],
+    defaultValue: []
+  },
+  'stock.$.book_id': {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  'stock.$.quantity': {
+    type: Number,
+    min: 0,
+    defaultValue: 0
+  }
+});
+
+var storesV4 = new SimpleSchema({
+  name: {
+    type: String
+  },
+  name_sorting: {
+    type: String,
+    autoValue: function () {
+      var name = this.field('name');
+      if (name.isSet)
+        return name.value.toLowerCase();
+      else
+        return this.unset();
+    }
+  },
+  address: {
+    type: String
+  },
+  gross: {
+    type: Number,
+    defaultValue: 0
+  },
+  stock: {
+    type: [Object],
+    defaultValue: []
+  },
+  'stock.$.book_id': {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  'stock.$.quantity': {
+    type: Number,
+    min: 0,
+    defaultValue: 0
+  },
+  'update_count' : {
+    type: Number,
+    min: 0,
+    optional: true,
+    autoValue: function () {
+      return this.isSet ? 0 : this.value + 1;
+    }
+  }
+});
+
+Schemas = { booksV1: booksV1, booksV2: booksV2, booksV3: booksV3, booksV4: booksV4,
+            storesV1: storesV1, storesV2: storesV2, storesV3: storesV3, storesV4: storesV4};

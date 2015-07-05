@@ -104,3 +104,32 @@ Tinytest.add('attachSchema - no field that is required and no default value or a
 
   teardown(test);
 });
+
+Tinytest.add('attachSchema - auto value updating existing documents', function (test) {
+  Stores.attachSchema(Schemas.storesV2, {replace: true});
+
+  Stores.insert({name: 'The Little Book Store', address: 'Neverland'});
+
+  Stores.attachSchema(Schemas.storesV3, {replace: true});
+
+  test.equal(Stores.find().count(), 1);
+  test.equal(Stores.findOne({name: 'The Little Book Store'}).name_sorting, 'The Little Book Store'.toLowerCase());
+  test.equal(Stores._migrations.findOne({_id: Stores._name}).version, 2);
+
+  teardown(test);
+});
+
+Tinytest.add('attachSchema - optional auto value should not update existing documents', function (test) {
+  Stores.attachSchema(Schemas.storesV3, {replace: true});
+
+  Stores.insert({name: 'The Little Book Store', address: 'Neverland'});
+
+  Stores.attachSchema(Schemas.storesV4, {replace: true});
+
+  test.equal(Stores.find().count(), 1);
+  test.isUndefined(Stores.findOne({name: 'The Little Book Store'}).update_count,
+    'There should not have been any changes to the existing document');
+  test.equal(Stores._migrations.findOne({_id: Stores._name}).version, 2);
+
+  teardown(test);
+});
