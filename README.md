@@ -3,6 +3,8 @@
 
 This package will help you manage your DB migrations with regard of [aldeed:collection2](https://github.com/aldeed/meteor-collection2) and [aldeed:simple-schema](https://github.com/aldeed/meteor-simple-schema).
 
+If you would like to affect the upcoming features you can just go in here -> [Collection2-Migrations User Story](https://docs.google.com/document/d/1U4LaVpYxYoo9n0k4A6V3FzOA_rXm5r9zLO0E0tNwiZg/edit#heading=h.s12znq4ckehl) and edit the user story.
+
 ### Important Notice - This package is a pre-release! Backup of your current DB is strongly advised!
 
 
