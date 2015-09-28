@@ -2,15 +2,10 @@
  * Created by David Yahalomi on 8/26/15.
  */
 
-Journaler = function Journaler() {
-  var defaultSettings = {
+class Journaler {
+  constructor() {
 
-  };
+  }
 
-  this.prototype = {
-
-  };
-
-  //////////////////////
-
-};
+  journalMigration
+}
