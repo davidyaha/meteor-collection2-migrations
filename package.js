@@ -11,15 +11,16 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.1.0.2');
+  api.versionsFrom('1.2.0.1');
 
-  api.use(['underscore', 'aldeed:collection2@2.3.3']);
+  api.use(['ecmascript', 'underscore', 'aldeed:collection2@2.3.3']);
   api.addFiles('collection2-migrations.js', 'server');
   api.addFiles('client-stubs.js', 'client');
 });
 
 Package.onTest(function(api) {
   // dependencies of tests
+  api.use('sanjo:jasmine');
   api.use(['aldeed:collection2', 'tinytest'], 'server');
 
   // this package
