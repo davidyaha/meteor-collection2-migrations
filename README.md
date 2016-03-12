@@ -1,11 +1,17 @@
-## Collection2-Migrations
+# Collection2-Migrations
 [![Build Status](https://travis-ci.org/davidyaha/meteor-collection2-migrations.svg?branch=master)](https://travis-ci.org/davidyaha/meteor-collection2-migrations)
+
+## You should probably use [bookmd:schema-migrations](https://www.youtube.com/watch?v=WABQiAwqVJg) 
+
+### Watch my talk to find out why:
+
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/WABQiAwqVJg/0.jpg)](http://www.youtube.com/watch?v=WABQiAwqVJg)
+
 
 This package will help you manage your DB migrations with regard of [aldeed:collection2](https://github.com/aldeed/meteor-collection2) and [aldeed:simple-schema](https://github.com/aldeed/meteor-simple-schema).
 
-If you would like to affect the upcoming features you can just go in here -> [Collection2-Migrations User Story](https://docs.google.com/document/d/1U4LaVpYxYoo9n0k4A6V3FzOA_rXm5r9zLO0E0tNwiZg/edit#heading=h.s12znq4ckehl) and edit the user story.
 
-### Important Notice - This package is a pre-release! Backup of your current DB is strongly advised!
+### Important Notice - Backup of your current DB is strongly advised!
 
 
 ### Auto Migration
@@ -82,23 +88,3 @@ Books.addCustomMigration('migrate isbn-10 to isbn-13', function () {
 
 Books.attachSchema(booksV2);
 ```
-
-### Next Big Thing
-
-This package is inspired from the idea that was originally implemented on rails.
-Currently, the big difference between those two pieces of code is that in rails, the developer that is writing the model
-or making changes to it will specify the changes as a way to define the [schema](http://edgeguides.rubyonrails.org/active_record_migrations.html).
-By doing so, it will allow upgrading and downgrading your model and schema.
-In this package, I mainly thought about creating a package that will utilize my already written schemas and have minimal
-code addition to my project as this will only run once. The problem is that the changes made to data is not recoverable
-if you have not made a backup of data before running your code. This is problematic and needs to fixed in a manner that
-will incorporate both specs. The idea I have for it is basically use the schemas I write as versions or delta objects.
-Each time I want to make a change to the schema I will call the attachSchema again with a delta object and through by
-doing so, the package could journal the changes that it will make to data and make sure that it is reversible. If it not
-a reversible change, it will not auto-migrate. Also, I would like to expose Meteor methods for calling the package to 
-migrate to a certain version of the schema.
-
-Make sure to tell me what you think of it in comments or issues.
-
-Thanks to @asafdav for this insight!
-
